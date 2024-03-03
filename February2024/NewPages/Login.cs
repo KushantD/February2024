@@ -1,49 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Docker.DotNet.Models;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
 
 
 namespace February2024.NewPages
 {
-    public class Login
+    public class LoginPage
     {
-        private readonly By usernameTextBoxLocator = By.Id("UserName"); 
+        private readonly By usernameTextBoxLocator = By.Id("UserName");
         IWebElement TextBoxUser;
 
         private readonly By passwordTextBoxLocator = By.Id("Password");
         IWebElement PasswordTextBox;
 
-        private readonly By loginButton = By.XPath("//body/div[@id='container']/div[1]/div[1]/section[1]/form[1]/div[3]/input[1]");
+        private readonly By loginButtonLocator = By.XPath("//body/div[@id='container']/div[1]/div[1]/section[1]/form[1]/div[3]/input[1]");
         IWebElement LoginBtn;
 
 
 
-        public void LoginAction(IWebDriver driver)
+        public void LoginAction(IWebDriver driver, string username,string password)
         {
-            driver.Navigate().GoToUrl("http://horse.industryconnect.io/");
+            string baseURL = "http://horse.industryconnect.io/";
+            driver.Navigate().GoToUrl(baseURL);
             driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
             //Identify username textbox and enter valid username
 
-             TextBoxUser = driver.FindElement(By.Id("UserName"));
-             TextBoxUser.SendKeys("hari");
+            TextBoxUser = driver.FindElement(usernameTextBoxLocator);
+            TextBoxUser.SendKeys(username);
 
             //Identify password textbox and enter password
 
-               PasswordTextBox = driver.FindElement(By.Id("Password"));
-               PasswordTextBox.SendKeys("123123");
-
-
-            // Thread.Sleep(100000);
+            PasswordTextBox = driver.FindElement(passwordTextBoxLocator);
+            PasswordTextBox.SendKeys(password);
 
             //Identify login button and click on login Button
 
-            IWebElement loginButton = driver.FindElement(By.XPath("//body/div[@id='container']/div[1]/div[1]/section[1]/form[1]/div[3]/input[1]"));
+            IWebElement loginButton = driver.FindElement(loginButtonLocator);
             loginButton.Click();
 
         }

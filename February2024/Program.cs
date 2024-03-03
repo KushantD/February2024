@@ -10,21 +10,22 @@ public class Program
 {
     private static void Main(string[] args)
     {
+        //Open Chrome Browser
         IWebDriver driver = new ChromeDriver();
-        Login LoginObj = new Login();
-        LoginObj.LoginAction(driver);
+
+        LoginPage LoginObj = new LoginPage();
+        LoginObj.LoginAction(driver, "hari", "123123");
 
         Home homeObj = new Home();
         homeObj.NavigateToTmpage(driver);
-        
+        homeObj.VerifyLoggedInUser(driver);
+
         TimeMaterial timeMaterialObj = new TimeMaterial();
         timeMaterialObj.CreateTmRecord(driver);
-        timeMaterialObj.UpdateTmRecord(driver);
+        timeMaterialObj.EditTmRecord(driver);
         timeMaterialObj.DeleteTmRecord(driver);
-
-
 
     }
 
-       
+
 }
