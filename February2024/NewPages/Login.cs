@@ -16,7 +16,7 @@ namespace February2024.NewPages
 
 
 
-        public void LoginAction(IWebDriver driver, string username,string password)
+        public void LoginAction(IWebDriver driver, string username, string password)
         {
             string baseURL = "http://horse.industryconnect.io/";
             driver.Navigate().GoToUrl(baseURL);

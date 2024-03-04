@@ -1,4 +1,5 @@
 ﻿using February2024.Utilities;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace February2024.NewPages
@@ -27,7 +28,7 @@ namespace February2024.NewPages
             DescriptionTextBox.SendKeys("KKK02");
 
             //Add PricePerUnit
-          
+
             WaitUtils.WaitToBeClickable(driver, "XPath", "//body/div[@id='container']/form[@id='TimeMaterialEditForm']/div[1]/div[4]/div[1]/span[1]/span[1]/input[1]", 3);
             IWebElement PricePerUnit = driver.FindElement(By.XPath("//body/div[@id='container']/form[@id='TimeMaterialEditForm']/div[1]/div[4]/div[1]/span[1]/span[1]/input[1]"));
             PricePerUnit.SendKeys("02");
@@ -43,18 +44,19 @@ namespace February2024.NewPages
             goToLastPageButton.Click();
 
 
-            IWebElement TimeMaterirals = driver.FindElement(By.XPath("//a[contains(text(),'Time & Materials')]"));
+            IWebElement CodeTextBox1 = driver.FindElement(By.XPath("//tbody/tr[4]/td[1]"));
 
-            if (TimeMaterirals.Text == "TimeMateriral!")
+            //if (codetextbox1.text != "kkk02")
 
-            {
-                Console.WriteLine("User Create record succefully");
-            }
-            else
-            {
-                Console.WriteLine("Not Create succeffully :( :(");
-            }
+            //{
+            //    assert.pass("user create record succefully");
+            //}
+            //else
+            //{
+            //    assert.fail("not create succeffully :( :(");
+            //}
 
+            Assert.That((CodeTextBox1.Text != "KKK02"), "Not Create succeffully :( :(");
         }
 
         public void EditTmRecord(IWebDriver driver)
@@ -66,7 +68,7 @@ namespace February2024.NewPages
             Thread.Sleep(3000);
 
             //Click on Edit Button
-            IWebElement editButton = driver.FindElement(By.XPath("//tbody/tr[3]/td[5]/a[1]"));
+            IWebElement editButton = driver.FindElement(By.XPath("//tbody/tr[2]/td[5]/a[1]"));
             editButton.Click();
             Thread.Sleep(3000);
 
@@ -81,6 +83,7 @@ namespace February2024.NewPages
             editDescriptionTextBox.SendKeys("Kushant");
 
             //Edit Price in Price TextBox
+            WaitUtils.WaitToBeClickable(driver, "XPath", "//body/div[@id='container']/form[@id='TimeMaterialEditForm']/div[1]/div[4]/div[1]/span[1]/span[1]/input[1]", 3);
             IWebElement editpriceOverlappingTag = driver.FindElement(By.XPath("//body/div[@id='container']/form[@id='TimeMaterialEditForm']/div[1]/div[4]/div[1]/span[1]/span[1]/input[1]"));
             IWebElement EditPriceTextBox = driver.FindElement(By.Id("Price"));
             editpriceOverlappingTag.Click();
@@ -98,19 +101,21 @@ namespace February2024.NewPages
             editGoToLastPageButton.Click();
 
             IWebElement editCode = driver.FindElement(By.XPath("//tbody/tr[3]/td[1]"));
-            IWebElement EditDescription = driver.FindElement(By.XPath("//tbody/tr[3]/td[3]")); 
+            IWebElement EditDescription = driver.FindElement(By.XPath("//tbody/tr[3]/td[3]"));
 
-            if (editCode.Text == "Kushant" && EditDescription.Text == "Kushant")
-            {
-                Console.WriteLine("Time record has been updated");
+            //if (editCode.Text == "Kushant" && EditDescription.Text == "Kushant")
+            //{
+            //    Console.WriteLine("Time record has been updated");
 
-            }
-            else
-            {
-                Console.WriteLine("Time record not been updated");
-            }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Time record not been updated");
+            //}
+            Assert.That((editCode.Text != "Kushant"), "Time record not been updated");
 
         }
+
         public void DeleteTmRecord(IWebDriver driver)
         {
             //Code for delete Time Record
@@ -119,22 +124,29 @@ namespace February2024.NewPages
             Thread.Sleep(3000);
 
             //Click on Delete Button
-            IWebElement dltbutton = driver.FindElement(By.XPath("//tbody/tr[3]/td[5]/a[2]"));
+            IWebElement dltbutton = driver.FindElement(By.XPath("//tbody/tr[2]/td[5]/a[2]"));
             dltbutton.Click();
             Thread.Sleep(3000);
 
             IAlert simpleAlert = driver.SwitchTo().Alert();
             simpleAlert.Accept();
 
-            IWebElement LastCodeInTable = driver.FindElement(By.XPath("//tbody/tr[3]/td[1]"));
-            if(LastCodeInTable.Text == "Kushant")
-            {
-                Console.WriteLine("Time Record has not been deleted");
-            }
-            else
-            {
-                Console.WriteLine("Time Record has been deleted");
-            }
+            IWebElement LastCodeInTable = driver.FindElement(By.XPath("//tbody/tr[2]/td[1]"));
+            //if (LastCodeInTable.Text == "Kushant")
+            //{
+            //    Console.WriteLine("Time Record has not been deleted");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Time Record has been deleted");
+            //}
+
+            Assert.That((LastCodeInTable.Text.Equals("Kushant")), "Time Record has been deleted");
+
+            IWebElement Administration = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+            Administration.Click();
+            Thread.Sleep(3000);
+
         }
 
     }
